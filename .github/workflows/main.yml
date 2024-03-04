@@ -1,0 +1,28 @@
+name: mirror bot
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 */6 * * *'
+jobs:
+  Mirrorbot:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: false
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+    - name: Downloading the Script
+      run: |
+           wget -qq ${{ secrets.mltb}}
+    - name: Permission
+      run: |
+           chmod 777 wzml.sh
+    - name: Running the Script
+      run: |
+           sudo bash wzml.sh
