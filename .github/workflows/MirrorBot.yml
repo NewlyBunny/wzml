@@ -1,0 +1,18 @@
+name: Spidy Mirror Bot
+on:
+  workflow_dispatch:
+jobs:
+  run-sync-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Downloading the Config
+        run: |
+          wget -qq ${{secrets.CONFIG}} 
+      - name: Building Image
+        run: |
+           sudo docker build . -t mirror-bot
+      - name: Running the Image
+        run: |
+           sudo docker run -p 80:80 -p 8080:8080 mirror-bot
